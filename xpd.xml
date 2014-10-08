@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+<xpd>
+    <components>
+        <component name = "Slicekit Core Board Support Library" type = "component" buildresults_path = "module_slicekit_support/.module_slicekit_support.buildinfo" scope = "General Use" path = "module_slicekit_support" metainfo_path = "module_slicekit_support/module_slicekit_support.metainfo" local = "false" id = "module_slicekit_support" description = "A library for configuring the sliceKIT Core Board ports">
+            <keyword>slicekit</keyword>
+            <keyword>spi</keyword>
+        </component>
+    </components>
+    <description>Slicekit support library</description>
+    <location>git://github.com/xcore/sc_slicekit_support.git</location>
+    <name>sc_slicekit_support</name>
+    <partnumber>XM-003385-DH</partnumber>
+    <release parenthash = "2fc3fc597c9d9d2bbe7073d760078a299fd9b572" version = "1.0.3rc0" githash = "7920fc4235a96585274d73d25d275ea63b4cd285"></release>
+    <release parenthash = "6357d2c4acf47cc71ab5a8f6614d2b7b806e9fae" version = "1.0.4rc0"></release>
+    <subpartnumber>XM-003386-SM</subpartnumber>
+    <vendor>XMOS</vendor>
+    <version_defines></version_defines>
+    <xcore_repo>git://github.com/xcore/sc_slicekit_support.git</xcore_repo>
+    <xpd_version>1.0</xpd_version>
+</xpd>
