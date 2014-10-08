@@ -3,7 +3,11 @@ API Reference
 
 .. _sec_defines_api:
 
+<<<<<<< HEAD
 Configuration Defines
+=======
+Configuration defines
+>>>>>>> d4b36020fde9d35f0f2c5a925cd218d1f561d6db
 ---------------------
 
 Demo and hardware specific
@@ -20,7 +24,11 @@ Core AVB parameters
 ~~~~~~~~~~~~~~~~~~~
   
 Each application using the AVB modules must include a header configuration file named
+<<<<<<< HEAD
 ``avb_conf.h`` within the ``src/`` directory of the application and this file must set the following values with #defines.
+=======
+``avb_conf.h`` within the ``src/`` directory of the application and this file must set the #defines in the following two sections.
+>>>>>>> d4b36020fde9d35f0f2c5a925cd218d1f561d6db
 
 See the demo application for a realistic example.
 
@@ -30,7 +38,13 @@ See the demo application for a realistic example.
 
 Ethernet
 ~~~~~~~~
+<<<<<<< HEAD
 See the Ethernet documentation for detailed information on its parameters.
+=======
+See the Ethernet documentation for detailed information on its parameters:
+
+https://www.xmos.com/published/xmos-layer-2-ethernet-mac-component?version=latest
+>>>>>>> d4b36020fde9d35f0f2c5a925cd218d1f561d6db
 
 Audio subsystem
 ~~~~~~~~~~~~~~~
@@ -90,7 +104,11 @@ top-level main. For details on the Ethernet component, see
 the `Ethernet Component Guide
 <http://github.xcore.com/sc_ethernet/index.html>`_.
 
+<<<<<<< HEAD
 Core Components
+=======
+Core components
+>>>>>>> d4b36020fde9d35f0f2c5a925cd218d1f561d6db
 ~~~~~~~~~~~~~~~
 
 .. doxygenfunction:: avb_manager
@@ -121,7 +139,11 @@ Core Components
 
 .. doxygenfunction:: avb_1722_talker
 
+<<<<<<< HEAD
 Audio Components
+=======
+Audio components
+>>>>>>> d4b36020fde9d35f0f2c5a925cd218d1f561d6db
 ~~~~~~~~~~~~~~~~
 
 The following types are used by the AVB audio components:
@@ -152,7 +174,11 @@ The following functions implement AVB audio components:
 AVB API
 -------
    
+<<<<<<< HEAD
 General Control Functions
+=======
+General control functions
+>>>>>>> d4b36020fde9d35f0f2c5a925cd218d1f561d6db
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. doxygenfunction:: avb_get_control_packet
@@ -162,7 +188,11 @@ General Control Functions
 .. doxygenfunction:: avb_process_1722_control_packet
 
 
+<<<<<<< HEAD
 Multicast Address Allocation Commands
+=======
+Multicast Address Allocation commands
+>>>>>>> d4b36020fde9d35f0f2c5a925cd218d1f561d6db
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. doxygenfunction:: avb_1722_maap_request_addresses
@@ -171,7 +201,11 @@ Multicast Address Allocation Commands
 
 .. doxygenfunction:: avb_1722_maap_relinquish_addresses
 
+<<<<<<< HEAD
 MAAP Application Hooks
+=======
+MAAP application hooks
+>>>>>>> d4b36020fde9d35f0f2c5a925cd218d1f561d6db
 ~~~~~~~~~~~~~~~~~~~~~~
 
 .. doxygenfunction:: avb_talker_on_source_address_reserved
@@ -184,7 +218,11 @@ AVB Control API
 
 .. doxygeninterface:: avb_interface
 
+<<<<<<< HEAD
 1722.1 Controller Commands
+=======
+1722.1 Controller commands
+>>>>>>> d4b36020fde9d35f0f2c5a925cd218d1f561d6db
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. doxygenfunction:: avb_1722_1_controller_connect
@@ -192,7 +230,11 @@ AVB Control API
 .. doxygenfunction:: avb_1722_1_controller_disconnect_all_listeners
 .. doxygenfunction:: avb_1722_1_controller_disconnect_talker
 
+<<<<<<< HEAD
 1722.1 Discovery Commands
+=======
+1722.1 Discovery commands
+>>>>>>> d4b36020fde9d35f0f2c5a925cd218d1f561d6db
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. doxygenfunction:: avb_1722_1_adp_announce
@@ -201,7 +243,11 @@ AVB Control API
 .. doxygenfunction:: avb_1722_1_adp_discover_all
 .. doxygenfunction:: avb_1722_1_entity_database_flush
 
+<<<<<<< HEAD
 1722.1 Application Hooks
+=======
+1722.1 application hooks
+>>>>>>> d4b36020fde9d35f0f2c5a925cd218d1f561d6db
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 These hooks are called on events that can be acted upon by the application. They can be overridden by
@@ -218,7 +264,11 @@ user defined hooks of the same name to perform custom functionality not present 
 
 .. _sec_1722_1_aem:
 
+<<<<<<< HEAD
 1722.1 Descriptors
+=======
+1722.1 descriptors
+>>>>>>> d4b36020fde9d35f0f2c5a925cd218d1f561d6db
 ------------------
 
 The XMOS AVB reference design provides an AVDECC Entity Model (AEM) consisting of descriptors to describe the internal components 
@@ -332,7 +382,11 @@ For example:
 
 .. _sec_ptp_api:
 
+<<<<<<< HEAD
 PTP Client API
+=======
+PTP client API
+>>>>>>> d4b36020fde9d35f0f2c5a925cd218d1f561d6db
 --------------
 
 The PTP client API can be used if you want extra information about the PTP
@@ -341,12 +395,20 @@ control the AVB endpoint since the talker, listener and media clock
 server units communicate with the PTP server directly.
 
 
+<<<<<<< HEAD
 Time Data Structures
+=======
+Time data structures
+>>>>>>> d4b36020fde9d35f0f2c5a925cd218d1f561d6db
 ~~~~~~~~~~~~~~~~~~~~
 
 .. doxygenstruct:: ptp_timestamp
 
+<<<<<<< HEAD
 Getting PTP Time Information
+=======
+Getting PTP time information
+>>>>>>> d4b36020fde9d35f0f2c5a925cd218d1f561d6db
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. doxygentypedef:: ptp_time_info
@@ -361,7 +423,11 @@ Getting PTP Time Information
 .. doxygenfunction:: ptp_get_requested_time_info
 .. doxygenfunction:: ptp_get_requested_time_info_mod64
 
+<<<<<<< HEAD
 Converting Timestamps
+=======
+Converting timestamps
+>>>>>>> d4b36020fde9d35f0f2c5a925cd218d1f561d6db
 ~~~~~~~~~~~~~~~~~~~~~
 
 .. doxygenfunction:: local_timestamp_to_ptp
