@@ -3,6 +3,13 @@
 
 #include "app_config.h"
 
+#if(AVB_AUDIO_IF_i2s)
+#define AVB_AUDIO_IF_SAMPLES_PER_PERIOD 2
+#endif
+#if(AVB_AUDIO_IF_tdm_multi)
+#define AVB_AUDIO_IF_SAMPLES_PER_PERIOD 8
+#endif
+
 /* Some of the configuration depends on the app_config.h file included above */
 
 /******** ETHERNET MAC CONFIGURATION PARAMETERS *************************************************/
@@ -29,6 +36,8 @@
 
 #define ETHERNET_RX_ENABLE_TIMER_OFFSET_REQ 1
 
+#define PTP_THROW_AWAY_SYNC_OUTLIERS 1
+
 /******** ENDPOINT AUDIO AND CLOCKING PARAMETERS ************************************************/
 
 /* Talker configuration */
@@ -50,7 +59,11 @@
 #define AVB_NUM_TALKER_UNITS 0
 #define AVB_NUM_MEDIA_INPUTS 0
 #define AVB_1722_1_TALKER_ENABLED 0
+#define AVB_NUM_AUDIO_SDATA_IN 0
+#endif
 
+#ifndef AVB_NUM_AUDIO_SDATA_IN
+#define AVB_NUM_AUDIO_SDATA_IN ((AVB_NUM_MEDIA_INPUTS+AVB_AUDIO_IF_SAMPLES_PER_PERIOD-1)/AVB_AUDIO_IF_SAMPLES_PER_PERIOD)
 #endif
 
 /* Listener configuration */
@@ -72,7 +85,11 @@
 #define AVB_NUM_LISTENER_UNITS 0
 #define AVB_NUM_MEDIA_OUTPUTS 0
 #define AVB_1722_1_LISTENER_ENABLED 0
+#define AVB_NUM_AUDIO_SDATA_OUT 0
+#endif
 
+#ifndef AVB_NUM_AUDIO_SDATA_OUT
+#define AVB_NUM_AUDIO_SDATA_OUT ((AVB_NUM_MEDIA_OUTPUTS+AVB_AUDIO_IF_SAMPLES_PER_PERIOD-1)/AVB_AUDIO_IF_SAMPLES_PER_PERIOD)
 #endif
 
 /** The maximum number of channels permitted per 1722 Talker stream */
@@ -105,6 +122,7 @@
 
 /** Enable 1722.1 AVDECC on the entity */
 #define AVB_ENABLE_1722_1 1
+#define AVB_1722_1_FIRMWARE_UPGRADE_ENABLED 1
 
 #define AVB_1722_1_ADP_ENTITY_CAPABILITIES (AVB_1722_1_ADP_ENTITY_CAPABILITIES_AEM_SUPPORTED| \
                                             AVB_1722_1_ADP_ENTITY_CAPABILITIES_CLASS_A_SUPPORTED| \

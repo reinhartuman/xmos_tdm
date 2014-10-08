@@ -11,7 +11,9 @@
 /** Number of input/output audio channels in the demo application
   * For simplicity, input and output is identical in size but can be configured
   * differently in ``avb_conf.h``. */
+#ifndef AVB_DEMO_NUM_CHANNELS
 #define AVB_DEMO_NUM_CHANNELS 8
+#endif
 
 /***** PORTS *********/
 

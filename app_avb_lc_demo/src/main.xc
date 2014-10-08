@@ -3,7 +3,6 @@
 #include <xccompat.h>
 #include <string.h>
 #include <xscope.h>
-#include "audio_i2s.h"
 #include "spi.h"
 #include "i2c.h"
 #include "avb.h"
@@ -23,6 +22,14 @@
 #include "avb_1722_1.h"
 #include "avb_srp.h"
 #include "aem_descriptor_types.h"
+
+#if(AVB_AUDIO_IF_i2s)
+#include "audio_i2s.h"
+#endif
+#if(AVB_AUDIO_IF_tdm_multi)
+#include "tdm_multi.h"
+#include <xports-i2s.h>
+#endif
 
 on tile[0]: otp_ports_t otp_ports0 = OTP_PORTS_INITIALIZER;
 avb_ethernet_ports_t avb_ethernet_ports =
@@ -67,6 +74,7 @@ on tile[AVB_I2C_TILE]: struct r_i2c r_i2c = { PORT_I2C_SCL, PORT_I2C_SDA };
 #endif
 
 on tile[0]: out buffered port:32 p_fs[1] = { PORT_SYNC_OUT };
+#if(AVB_AUDIO_IF_i2s)
 on tile[0]: i2s_ports_t i2s_ports =
 {
   XS1_CLKBLK_3,
@@ -86,6 +94,19 @@ on tile[0]: out buffered port:32 p_aud_dout[AVB_DEMO_NUM_CHANNELS/2] = PORT_SDAT
 on tile[0]: in buffered port:32 p_aud_din[AVB_DEMO_NUM_CHANNELS/2] = PORT_SDATA_IN;
 #else
   #define p_aud_din null
+#endif
+#endif
+
+#if(AVB_AUDIO_IF_tdm_multi)
+on tile[0]: xports_i2s__context_t tdm_audio_if = {
+    XS1_CLKBLK_3,
+    XS1_CLKBLK_4,
+    PORT_MCLK,
+    PORT_SCLK,
+    PORT_LRCLK,
+    PORT_SDATA_OUT,
+    PORT_SDATA_IN,
+};
 #endif
 
 #if AVB_XA_SK_AUDIO_PLL_SLICE
@@ -196,6 +217,7 @@ int main(void)
   interface avb_interface i_avb[NUM_AVB_MANAGER_CHANS];
   interface srp_interface i_srp;
   interface avb_1722_1_control_callbacks i_1722_1_entity;
+  interface spi_interface i_spi;
 
   par
   {
@@ -226,6 +248,7 @@ int main(void)
       init_media_output_fifos(ofifos, ofifo_data, AVB_NUM_MEDIA_OUTPUTS);
 #endif
 
+#if(AVB_AUDIO_IF_i2s)
       i2s_master(i2s_ports,
                  p_aud_din, AVB_NUM_MEDIA_INPUTS,
                  p_aud_dout, AVB_NUM_MEDIA_OUTPUTS,
@@ -234,6 +257,29 @@ int main(void)
                  ofifos,
                  c_media_ctl[0],
                  0);
+#endif
+
+#if(AVB_AUDIO_IF_tdm_multi)
+        tdm_master_multi(
+                tdm_audio_if,
+                AVB_NUM_MEDIA_INPUTS,
+                AVB_NUM_MEDIA_OUTPUTS,
+                MASTER_TO_WORDCLOCK_RATIO,
+#if AVB_DEMO_ENABLE_TALKER
+                ififos,
+#else
+                null,
+#endif
+
+#if AVB_DEMO_ENABLE_LISTENER
+                ofifos,
+#else
+                null,
+#endif
+                c_media_ctl[0],
+                0
+        );
+#endif
     }
 
 #if AVB_DEMO_ENABLE_TALKER
@@ -270,13 +316,14 @@ int main(void)
 
     on tile[1]: application_task(i_avb[AVB_MANAGER_TO_DEMO], i_1722_1_entity);
 
-    on tile[0]: avb_1722_1_maap_task(otp_ports0,
+    on tile[0].core[0]: avb_1722_1_maap_task(otp_ports0,
                                     i_avb[AVB_MANAGER_TO_1722_1],
                                     i_1722_1_entity,
-                                    null,
+                                    i_spi,
                                     c_mac_rx[MAC_RX_TO_1722_1],
                                     c_mac_tx[MAC_TX_TO_1722_1],
                                     c_ptp[PTP_TO_1722_1]);
+    on tile[0].core[0]: spi_task(i_spi, spi_ports);
   }
 
     return 0;

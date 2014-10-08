@@ -30,6 +30,65 @@ OPTIONAL_HEADERS = avb_app_board_config.h
 
 XCC_FLAGS = -Os -save-temps -g -report -Xmapper --map -Xmapper MAPFILE -fxscope
 
+###########################################################################
+# Settings derived from configuration names
+###########################################################################
+
+# if config name contains TDM, use the TDM multi interface
+ifneq (,$(findstring TDM,$(CONFIG))) 
+AUDIO_INTERFACE = tdm_multi
+# one of i2s, tdm, tdm_multi
+endif
+
+###########################################################################
+# Default settings
+###########################################################################
+
+ifndef AUDIO_INTERFACE
+AUDIO_INTERFACE = i2s
+endif
+
+#hack
+XCC_FLAGS += -DAVB_AUDIO_IF_$(AUDIO_INTERFACE)=1 -DI2S_SYNTH_FROM=1
+
+###########################################################################
+#############################  Configurations #############################
+###########################################################################
+# Configuration naming convention:
+# example: 1t1s16ch_2l2s32ch_TDM
+# $X[tl]$Ys$Zch[_$if]
+# $Xt: 	number of talkers
+# $Xl: 	number of listeners
+# $Ys: 	number of streams
+# $Zch: number of channels
+# $if:	optional: audio interface other than i2s
+
+XCC_FLAGS_1t8s16ch_1l8s16ch_TDM = $(XCC_FLAGS) -DAVB_NUM_SINKS=8 -DAVB_NUM_SOURCES=8 -DAVB_DEMO_NUM_CHANNELS=16
+
+XCC_FLAGS_1t4s16ch_1l4s16ch_TDM = $(XCC_FLAGS) -DAVB_NUM_SINKS=4 -DAVB_NUM_SOURCES=4 -DAVB_DEMO_NUM_CHANNELS=16
+
+XCC_FLAGS_1t2s16ch_1l2s16ch_TDM = $(XCC_FLAGS) -DAVB_NUM_SINKS=2 -DAVB_NUM_SOURCES=2 -DAVB_DEMO_NUM_CHANNELS=16
+
+XCC_FLAGS_1t1s16ch_1l1s16ch_TDM = $(XCC_FLAGS) -DAVB_NUM_SINKS=1 -DAVB_NUM_SOURCES=1 -DAVB_DEMO_NUM_CHANNELS=16
+
+XCC_FLAGS_1t1s16ch_TDM = $(XCC_FLAGS) -DAVB_DEMO_ENABLE_LISTENER=0 -DAVB_NUM_SOURCES=1 -DAVB_DEMO_NUM_CHANNELS=16
+
+XCC_FLAGS_1t1s8ch_TDM = $(XCC_FLAGS) -DAVB_DEMO_ENABLE_TALKER=0 -DAVB_NUM_SINKS=1 -DAVB_DEMO_NUM_CHANNELS=16
+
+XCC_FLAGS_1t1s8ch_1l1s8ch_TDM = $(XCC_FLAGS) -DAVB_NUM_SINKS=1 -DAVB_NUM_SOURCES=1 -DAVB_DEMO_NUM_CHANNELS=8 -DMAC=$(MAC)
+
+XCC_FLAGS_1t2s8ch_1l2s8ch_TDM = $(XCC_FLAGS) -DAVB_NUM_SINKS=2 -DAVB_NUM_SOURCES=2 -DAVB_DEMO_NUM_CHANNELS=8
+
+XCC_FLAGS_1t8s8ch_1l8s8ch_TDM = $(XCC_FLAGS) -DAVB_NUM_SINKS=8 -DAVB_NUM_SOURCES=8 -DAVB_DEMO_NUM_CHANNELS=8
+
+# This is for the Testbench Endpoint. I2S I/O of actual audio. The remaining channels are computed
+XCC_FLAGS_1t8s16ch_1l8s16ch_I2S = $(XCC_FLAGS) -DAVB_NUM_SINKS=8 -DAVB_NUM_SOURCES=8 -DAVB_DEMO_NUM_CHANNELS=16 
+#force to fit in the I/O budget
+XCC_FLAGS_1t8s16ch_1l8s16ch_I2S += -DAVB_NUM_AUDIO_SDATA_IN=4 -DAVB_NUM_AUDIO_SDATA_OUT=4  
+
+# This is for the Testbench Endpoint. I2S I/O of actual audio. The remaining channels are computed
+XCC_FLAGS_1t2s4ch_1l2s4ch_I2S = $(XCC_FLAGS) -DAVB_NUM_SINKS=2 -DAVB_NUM_SOURCES=2 -DAVB_DEMO_NUM_CHANNELS=4
+
 XCC_FLAGS_main.xc = $(XCC_FLAGS) -falways-inline
 
 # The USED_MODULES variable lists other module used by the application. 
