@@ -7,4 +7,4 @@ This repository is a combination of source code provided by XMOS on github, main
 
 The only additional stuff added is TDM support provided by Thomas Gmeinder also on github.
 
-This is not a official XMOS release as it consists out of the most current github releases for each of listed XMOS repositories.
+This is not a official XMOS release as it consists out of the most current github releases for each of the listed XMOS repositories.
